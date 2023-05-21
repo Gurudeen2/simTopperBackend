@@ -11,18 +11,19 @@ import json
 
 def buyairtime():
     url = "https://www.arrifqubundle.com/api/topup/"
-    payload = "{\"network\": 1,\r\n \"amount\":50, \r\n \"mobile_number\": 08063641230,\r\n \"Ported_number\":true,\r\n \"airtime_type\":\"VTU\"}"
-    k = json.loads(payload)
-    print("payload", k)
-    # headers = {
-    #     'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
-    #     'Content-Type': 'application/json'
-    # }
-    # response = requests.request("POST", url, headers=headers, data=payload)
-    # print("airtime we", response.text)
+    payload = {"network": 1, "amount": 50, "mobile_number": 8063641230,
+               "Ported_number":True, "airtime_type": "VTU"}
+# k = json.dumps(payload, indent=4)
+#     print("payload", k)
+    headers = {
+        'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
+    print("airtime we", response.text)
     return
 
-
+    
 class BuyAirtime(APIView):
     def get(self, request):
         apikey = "JOBY94XGC4E8345NB27845W03TU0M3IFG6D0IFY923U118CDENU854SS361OG8A9"
