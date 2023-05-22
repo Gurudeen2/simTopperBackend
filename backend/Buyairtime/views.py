@@ -27,21 +27,21 @@ def buyairtime():
 
 class BuyAirtime(APIView):
     def get(self, request):
-        apikey = "JOBY94XGC4E8345NB27845W03TU0M3IFG6D0IFY923U118CDENU854SS361OG8A9"
-        userId = "CK10136160"
+        apikey = "JOBY94XGC4E8345NB27845W03TU0M3IFG6D0IFY923U118CDENU854SS361G8A9"
+        userId = "CK1013160"
 
-        buyairtime()
+        # buyairtime()
 
         UserID = urllib.parse.quote("CK10136160")
         APIKey = urllib.parse.quote(
-            "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0J1GU4D8VE")
+            "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0JGU4D8VE")
       #   MobileNetwork = urllib.parse.quote("01")
         Amount = urllib.parse.quote("50")
         # MobileNumber = urllib.parse.quote("08063641230")
         CallBackURL = urllib.parse.quote("www.arrifqubundle.com")
 # https://www.arrifqubundle.com
         # UserID="CK10136160"
-        # APIKey= "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0J1GU4D8VE"
+        # APIKey= "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0JGU4D8VE"
         MobileNetwork = "01"
         # Amount="50"
         MobileNumber=8063641230
@@ -65,7 +65,7 @@ class BuyAirtime(APIView):
                    "Ported_number": True, "airtime_type": "VTU"}
 
         headers = {
-            'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
+            'Authorization': 'Token 4f81017a394ceaaf050456dc31425d739511712',
             'Content-Type': 'application/json'
         }
         response = requests.request(
