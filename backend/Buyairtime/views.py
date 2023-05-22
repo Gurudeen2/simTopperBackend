@@ -25,50 +25,51 @@ def buyairtime():
     return
 
 
+def CK():
+
+    payloadCK = {
+
+        "UserID": "CK10136160",
+        "APIKey": "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0J1GU4D8VE",
+        "Amount": 50,
+        "MobileNetwork": "01",
+        "MobileNumber": 8063641230,
+        "CallBackURL": "/"
+    }
+    base_url = f'https://www.nellobytesystems.com/APIAirtimeV1.asp'
+    airtime = requests.get(base_url, params=json.dumps(payloadCK))
+    print("airitme", airtime.text)
+    return  # Response({"ip": ip.content, "airtime": airtime.content})
+    # base_url = f'https://www.nellobytesystems.com/APIAirtimeV1.asp?UserID={0}&APIKey={1}&MobileNetwork={2}&Amount={3}&MobileNumber={4}&CallBackURL={5}'.format(UserID, APIKey, MobileNetwork, Amount, MobileNumber, CallBackURL)
+   #   base_url = f'https://www.nellobytesystems.com/APIAirtimeV1.asp?UserID={UserID}&APIKey={APIKey}&MobileNetwork={MobileNetwork}&Amount={Amount}&MobileNumber={MobileNumber}&CallBackURL={CallBackURL}'
+   #   base_url = f'https://www.nellobytesystems.com/APIWalletBalanceV1.asp?UserID={UserID}&APIKey={APIKey}'
+    # ip_url = f'https://www.nellobytesystems.com/APIServerIPV1.asp?UserID={UserID}&APIKey={APIKey}'
+    # ip = requests.get(ip_url)
+
+    # response = requests.request("GET","https://www.nellobytesystems.com/APIAirtimeV1.asp?", params=params)
+
+
 class BuyAirtime(APIView):
     def get(self, request):
-        apikey = "JOBY94XGC4E8345NB27845W03TU0M3IFG6D0IFY923U118CDENU854SS361G8A9"
-        userId = "CK1013160"
-
-        # buyairtime()
-
-        UserID = urllib.parse.quote("CK10136160")
-        APIKey = urllib.parse.quote(
-            "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0JGU4D8VE")
-      #   MobileNetwork = urllib.parse.quote("01")
-        Amount = urllib.parse.quote("50")
-        # MobileNumber = urllib.parse.quote("08063641230")
-        CallBackURL = urllib.parse.quote("www.arrifqubundle.com")
-# https://www.arrifqubundle.com
-        # UserID="CK10136160"
-        # APIKey= "Z0U5H6E1E407E4GOBFL268B463S6260KNU2CADW1U762774KP53UZW0JGU4D8VE"
-        MobileNetwork = "01"
-        # Amount="50"
-        MobileNumber=8063641230
-        # CallBackURL="/"
-
-        # base_url = f'https://www.nellobytesystems.com/APIAirtimeV1.asp?UserID={0}&APIKey={1}&MobileNetwork={2}&Amount={3}&MobileNumber={4}&CallBackURL={5}'.format(UserID, APIKey, MobileNetwork, Amount, MobileNumber, CallBackURL)
-        base_url = f'https://www.nellobytesystems.com/APIAirtimeV1.asp?UserID={UserID}&APIKey={APIKey}&MobileNetwork={MobileNetwork}&Amount={Amount}&MobileNumber={MobileNumber}&CallBackURL={CallBackURL}'
-      #   base_url = f'https://www.nellobytesystems.com/APIAirtimeV1.asp?UserID={UserID}&APIKey={APIKey}&MobileNetwork={MobileNetwork}&Amount={Amount}&MobileNumber={MobileNumber}&CallBackURL={CallBackURL}'
-      #   base_url = f'https://www.nellobytesystems.com/APIWalletBalanceV1.asp?UserID={UserID}&APIKey={APIKey}'
-        ip_url = f'https://www.nellobytesystems.com/APIServerIPV1.asp?UserID={UserID}&APIKey={APIKey}'
-        airtime = requests.get(base_url)
-        ip = requests.get(ip_url)
-
-        # print("airitme", airtime.text)
-        # response = requests.request("GET","https://www.nellobytesystems.com/APIAirtimeV1.asp?", params=params)
-        return Response({"ip": ip.content, "airtime": airtime.content})
+        # CK()
+        return Response("checking")
 
     def post(self, request):
+
+        print("posted request", request)
         url = "https://www.arrifqubundle.com/api/topup/"
         payload = {"network": 1, "amount": 50, "mobile_number": 8063641230,
                    "Ported_number": True, "airtime_type": "VTU"}
 
         headers = {
-            'Authorization': 'Token 4f81017a394ceaaf050456dc31425d739511712',
+            'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
             'Content-Type': 'application/json'
         }
         response = requests.request(
             "POST", url, headers=headers, data=json.dumps(payload))
-        print("airtime we", response.text)
-        return Response(response.text)
+        if response.status_code == 200:
+            airtime = json.loads(response.content)
+        else:
+            airtime = json.loads(response.content)
+
+        return Response(airtime)
