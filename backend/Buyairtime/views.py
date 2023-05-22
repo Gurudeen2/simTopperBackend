@@ -50,9 +50,6 @@ def CK():
 
 
 class BuyAirtime(APIView):
-    def get(self, request):
-        # CK()
-        return Response("checking")
 
     def post(self, request):
 
