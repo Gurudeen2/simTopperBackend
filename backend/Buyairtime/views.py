@@ -50,10 +50,15 @@ import json
 class BuyAirtime(APIView):
 
     def post(self, request):
-       
-        print("data", request.data)
+
+        print("data", request.data["amount"])
+        # amount = request.data["amount"]
+        # mobileNumber = request.data["mobile_number"]
+        # amount = request.data["amount"]
+        # network = request.data["network"]
+
         # url = "https://www.arrifqubundle.com/api/topup/"
-        # payload = {"network": 1, "amount": 50, "mobile_number": 8063641230,
+        # payload = {"network": network, "amount": amount, "mobile_number": mobileNumber,
         #            "Ported_number": True, "airtime_type": "VTU"}
 
         # headers = {
