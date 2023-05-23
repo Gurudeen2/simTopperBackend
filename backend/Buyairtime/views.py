@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# import requests
+import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -50,26 +50,29 @@ import json
 class BuyAirtime(APIView):
 
     def post(self, request):
+        
+        # get data from the frontend form
+        amount = request.data["amount"]
+        mobileNumber = request.data["mobile_number"]
+        amount = request.data["amount"]
+        network = request.data["network"]
 
-        print("data", request.data["amount"])
-        # amount = request.data["amount"]
-        # mobileNumber = request.data["mobile_number"]
-        # amount = request.data["amount"]
-        # network = request.data["network"]
+        # api url
+        url = "https://www.arrifqubundle.com/api/topup/"
+        
+        # parameters
+        payload = {"network": network, "amount": amount, "mobile_number": mobileNumber,
+                   "Ported_number": True, "airtime_type": "VTU"}
 
-        # url = "https://www.arrifqubundle.com/api/topup/"
-        # payload = {"network": network, "amount": amount, "mobile_number": mobileNumber,
-        #            "Ported_number": True, "airtime_type": "VTU"}
+        headers = {
+            'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
+            'Content-Type': 'application/json'
+        }
+        response = requests.request(
+            "POST", url, headers=headers, data=json.dumps(payload))
+        if response.status_code == 200:
+            airtime = json.loads(response.content)
+        else:
+            airtime = json.loads(response.content)
 
-        # headers = {
-        #     'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
-        #     'Content-Type': 'application/json'
-        # }
-        # response = requests.request(
-        #     "POST", url, headers=headers, data=json.dumps(payload))
-        # if response.status_code == 200:
-        #     airtime = json.loads(response.content)
-        # else:
-        #     airtime = json.loads(response.content)
-
-        return Response("airtime")
+        return Response(airtime)

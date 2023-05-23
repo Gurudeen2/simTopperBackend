@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "Buyairtime",
     'corsheaders',
     "rest_framework",
+    "users"
 
 ]
 
