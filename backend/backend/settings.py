@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "Buyairtime",
     'corsheaders',
     "rest_framework",
-    "users"
+    "usermanage",
 
 ]
 
@@ -82,6 +82,7 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_ALL_ORIGINS: True
 
 CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',
