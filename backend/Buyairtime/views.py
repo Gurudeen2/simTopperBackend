@@ -54,7 +54,6 @@ class BuyAirtime(APIView):
         # get data from the frontend form
         amount = request.data["amount"]
         mobileNumber = request.data["mobile_number"]
-        amount = request.data["amount"]
         network = request.data["network"]
 
         # api url

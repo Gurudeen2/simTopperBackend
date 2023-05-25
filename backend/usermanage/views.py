@@ -1,23 +1,35 @@
-from django.shortcuts import render
-import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import json
 from .models import Users
+import hashlib
 
 # Create your views here.
-#  = models.CharField(max_length=10, primary_key=True)
-#     fullname = models.CharField(max_length=50)
-#     email = models.CharField(max_length=50, blank=True)
-#     mobilenumber = models.CharField(max_length=15, blank=False)
-#     token = models.CharField(max_length=100, blank=False, null=False)
-#     password
 
 
 class CreateUser(APIView):
-    # {'firstname': 'Akeem', 'lastname': 'Fatai', 'email': 'akeemtolanifatai@gmail.com', 'password': 'tolani100', 'phoneno': '8970'}
+
     def post(self, request):
-        print(request.data)
-        # if request.method == "POST":
-        # Users.objects.create(user_id=)
-        return Response("status")
+
+        if request.method == "POST":
+            email = request.data["email"]
+            phoneno = request.data["phoneno"]
+            if not Users.obects.filter(email=email).exists():
+                if not Users.objects.filter(mobilenumber=phoneno).exists():
+
+                    userid = "TI" + \
+                        ord(request.data["firstname"][0:2]) + \
+                        ord(request.data["lastname"][2:0])
+                    token = hashlib.sha3_256(email.encode("UTF-8")).hexdigest()
+
+                    users = Users.objects.create(user_id=userid, fname=request.data["firstname"],
+                                                 sname=request.data["lastname"], email=request.data["email"],
+                                                 mobilenumber=phoneno, token=token, password=request.data["password"])
+                    # send email, phone and password
+
+                    users.save()
+                    message = "Registration Complete"
+                else:
+                    message = "Phone Number Already Exist!!!"
+            else:
+                message = "Email Already Exist!!!"
+        return Response(message)
