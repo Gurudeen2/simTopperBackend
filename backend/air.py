@@ -7,4 +7,5 @@ from django.conf import settings
 # print("payload", k)
 
 f = "Fatai"
-print(settings.AIRTIME_TOKEN)
+for i in f:
+    print(i)

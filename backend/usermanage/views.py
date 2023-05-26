@@ -7,6 +7,14 @@ from django.core.mail import send_mail
 # Create your views here.
 
 
+def ORD(data):
+    charconv = 0
+    for char in str(data):
+        charconv += ord(char)
+        print("char", char)
+    return charconv
+
+
 class CreateUser(APIView):
 
     def post(self, request):
@@ -14,19 +22,24 @@ class CreateUser(APIView):
         if request.method == "POST":
             email = request.data["email"]
             phoneno = request.data["phoneno"]
-            if not Users.obects.filter(email=email).exists():
-                if not Users.objects.filter(mobilenumber=phoneno).exists():
+            fname = ORD(request.data["firstname"])
 
-                    userid = "TI" + \
-                        ord(request.data["firstname"][0:2]) + \
-                        ord(request.data["lastname"][2:0])
+            print("firstname", fname)
+
+            if not Users.objects.filter(email=email).exists():
+                if not Users.objects.filter(mobilenumber=phoneno).exists():
+                    count = Users.objects.all().count() + 1
+                    print("count", count)
+                    userid = "TI" + str(fname) + str(count)
                     token = hashlib.sha3_256(email.encode("UTF-8")).hexdigest()
 
                     users = Users.objects.create(user_id=userid, fname=request.data["firstname"],
                                                  sname=request.data["lastname"], email=request.data["email"],
                                                  mobilenumber=phoneno, token=token, password=request.data["password"])
 
-                    users.save()
+                    # users.save()
+                    print("token", token)
+                    print("userid", userid)
                     html = f""""
                             <html>
                             <head><title>
@@ -40,7 +53,7 @@ class CreateUser(APIView):
                             </p>
                             <p>
                                 Email: {request.data["email"]} <br />
-                                Phone Number: {request.data["phoneon"]} <br />
+                                Phone Number: {request.data["phoneno"]} <br />
                                 Password: {request.data["password"]}
                             </p>
                             </body>
@@ -55,4 +68,4 @@ class CreateUser(APIView):
                     message = "Phone Number Already Exist!!!"
             else:
                 message = "Email Already Exist!!!"
-        return Response(message)
+        return Response("message")
