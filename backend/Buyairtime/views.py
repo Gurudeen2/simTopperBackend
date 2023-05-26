@@ -2,6 +2,8 @@ from django.shortcuts import render
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.conf import settings
+
 
 import json
 # Create your views here.
@@ -50,7 +52,7 @@ import json
 class BuyAirtime(APIView):
 
     def post(self, request):
-        
+
         # get data from the frontend form
         amount = request.data["amount"]
         mobileNumber = request.data["mobile_number"]
@@ -58,13 +60,13 @@ class BuyAirtime(APIView):
 
         # api url
         url = "https://www.arrifqubundle.com/api/topup/"
-        
+
         # parameters
         payload = {"network": network, "amount": amount, "mobile_number": mobileNumber,
                    "Ported_number": True, "airtime_type": "VTU"}
 
         headers = {
-            'Authorization': 'Token 4f81017a394ceaaf050456dc31425d7395121712',
+            'Authorization': settings.AIRTIME_TOKEN,
             'Content-Type': 'application/json'
         }
         response = requests.request(
@@ -75,6 +77,3 @@ class BuyAirtime(APIView):
             airtime = json.loads(response.content)
 
         return Response(airtime)
-
-
-

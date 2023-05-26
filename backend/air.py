@@ -1,4 +1,5 @@
 import json
+from django.conf import settings
 
 # payload = {"network": 1, "amount": 50, "mobile_number": 8063641230,
 #            "Ported_number": "true", "airtime_type": "VTU"}
@@ -6,4 +7,4 @@ import json
 # print("payload", k)
 
 f = "Fatai"
-print(f[0:2])
+print(settings.AIRTIME_TOKEN)
