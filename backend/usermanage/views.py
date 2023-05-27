@@ -55,7 +55,7 @@ class CreateUser(APIView):
                     """
                     # send email, phone and password
                     send_mail(subject="Registration Successful", message="Thanks for registering",
-                              from_email="akeemtolani2@gmail.com", recipient_list=[request.data["email"]], html_message=html)
+                              from_email="TopIT", recipient_list=[request.data["email"]], html_message=html)
 
                     message = "Registration Complete"
                 else:
