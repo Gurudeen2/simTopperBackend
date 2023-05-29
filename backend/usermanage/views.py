@@ -1,5 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from .models import Users
 import hashlib
 from django.core.mail import send_mail
@@ -16,8 +18,6 @@ def ORD(data):
 class CreateUser(APIView):
 
     def post(self, request):
-        user = Users.objects.all()
-        print(user)
 
         if request.method == "POST":
             email = request.data["email"]
@@ -71,28 +71,36 @@ class CreateUser(APIView):
                         f.write(
                             f"{datetime.now()} :: --> {err} --->, Module: usermanage \n")
                         f.close()
-                    message = "Registration Complete"
+                    return Response("Registration Complete", status=200)
                 else:
-                    message = "Phone Number Already Exist!!!"
+                    return Response("Phone Number Already Exist", status=403)
             else:
-                message = "Email Already Exist!!!"
+                return Response("Email Already Exist", status=403)
             # except Exception as e:
             #     message = e
 
-        return Response(message)
-# 09063641230
+        # return Response(message)
 
 
-class LoginUser(APIView):
-    def post(self,request):
+class LoginUser(ObtainAuthToken):
+    def post(self, request):
         if request.method == "POST":
-            print("post", )
             username = request.data["username"]
             password = request.data["password"]
-            if Users.objects.filter(mobilenumber=username).exists() or Users.objects.filter(email=username).exists():         
-                password = hashlib.sha3_256(password.encode("UTF-8")).hexdigest() 
+            if Users.objects.filter(mobilenumber=username).exists() or Users.objects.filter(email=username).exists():
+                password = hashlib.sha3_256(
+                    password.encode("UTF-8")).hexdigest()
                 if Users.objects.filter(password=password).exists():
-                   return Response("Login Successful", status=200)
+                    user = Users.objects.filter(
+                        mobilenumber=username).first() or Users.objects.filter(email=username).first()
+                    token, created = Token.objects.get_or_create(
+                        user=Users.objects.filter(email=username).first())
+
+                    print("users", user.mobilenumber)
+                    print("token", token)
+                    return Response({"message": "Login Successful",
+                                    #  "token": token
+                                     }, status=200)
             else:
                 return Response("Account Does Not Exist", status=401)
         # return Response(status=200)

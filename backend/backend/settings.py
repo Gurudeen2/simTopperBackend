@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "Buyairtime",
     'corsheaders',
     "rest_framework",
+    "rest_framework.authtoken",
     "usermanage",
 
 ]

@@ -1,2 +1,3 @@
 2023-05-28 12:52:30.194866 :: --> [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond Module: usermanage 
 2023-05-28 14:05:22.736234 :: --> [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond --->, Module: usermanage 
+2023-05-29 14:13:48.474390 :: --> [Errno 11001] getaddrinfo failed --->, Module: usermanage 
