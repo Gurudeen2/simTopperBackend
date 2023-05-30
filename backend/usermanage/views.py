@@ -1,7 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
 from .models import Users
 import hashlib
 from django.core.mail import send_mail
@@ -82,7 +80,7 @@ class CreateUser(APIView):
         # return Response(message)
 
 
-class LoginUser(ObtainAuthToken):
+class LoginUser(APIView):
     def post(self, request):
         if request.method == "POST":
             username = request.data["username"]
@@ -91,13 +89,12 @@ class LoginUser(ObtainAuthToken):
                 password = hashlib.sha3_256(
                     password.encode("UTF-8")).hexdigest()
                 if Users.objects.filter(password=password).exists():
-                    user = Users.objects.filter(
-                        mobilenumber=username).first() or Users.objects.filter(email=username).first()
-                    token, created = Token.objects.get_or_create(
-                        user=Users.objects.filter(email=username).first())
+                    # user = Users.objects.filter(
+                    #     mobilenumber=username).first() or Users.objects.filter(email=username).first()
+                    # token, created = Token.objects.get_or_create(user=user.mobilenumber)
 
-                    print("users", user.mobilenumber)
-                    print("token", token)
+                    # print("users", user.mobilenumber)
+                    # print("token", token)
                     return Response({"message": "Login Successful",
                                     #  "token": token
                                      }, status=200)
