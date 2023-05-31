@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     "Buyairtime",
     'corsheaders',
     "rest_framework",
-    "rest_framework.authtoken",
+    # "rest_framework.authtoken",
     "usermanage",
-    # "users"
+    "user"
 
 ]
 
@@ -61,8 +61,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
-# AUTH_USER_MODEL = 'userabstract.CustomUser'
-# AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'userabstract.User'
+AUTH_USER_MODEL = 'user.User'
 
 TEMPLATES = [
     {
@@ -118,7 +118,7 @@ CORS_ALLOW_HEADERS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db2.sqlite3',
     }
 }
 
