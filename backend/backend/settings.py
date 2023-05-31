@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "usermanage",
+    # "users"
 
 ]
 
@@ -60,6 +61,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+# AUTH_USER_MODEL = 'userabstract.CustomUser'
+# AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {
