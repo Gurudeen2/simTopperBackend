@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import Users
 import hashlib
 from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
 from datetime import datetime
 
 
@@ -17,27 +18,27 @@ class CreateUser(APIView):
 
     def post(self, request):
 
+        User = get_user_model()
         if request.method == "POST":
             email = request.data["email"]
             phoneno = request.data["phoneno"]
             fname = ORD(request.data["firstname"])
             password = request.data["password"]
-
             # try:
             # Users.objects.all().delete()
 
-            if not Users.objects.filter(email=email).exists():
-                if not Users.objects.filter(mobilenumber=phoneno).exists():
-                    count = Users.objects.all().count() + 1
+            if not User.objects.filter(email=email).exists():
+                if not User.objects.filter(phone=phoneno).exists():
+                    count = User.objects.all().count() + 1
                     userid = "TI" + str(fname) + str(count)
                     token = hashlib.sha3_256(
                         email.encode("UTF-8")).hexdigest()
-                    password = hashlib.sha3_256(
-                        password.encode("UTF-8")).hexdigest()
+                    # password = hashlib.sha3_256(
+                    #     password.encode("UTF-8")).hexdigest()
 
-                    users = Users.objects.create(user_id=userid, fname=request.data["firstname"],
-                                                 sname=request.data["lastname"], email=request.data["email"],
-                                                 mobilenumber=phoneno, token=token, password=password)
+                    users = User.objects.create_user(user_id=userid, first_name=request.data["firstname"],
+                                                 last_name=request.data["lastname"], email=request.data["email"],
+                                                 phone=phoneno, token=token, password=password)
 
                     users.save()
 
@@ -77,7 +78,7 @@ class CreateUser(APIView):
             # except Exception as e:
             #     message = e
 
-        # return Response(message)
+        # return Response("message")
 
 
 class LoginUser(APIView):
