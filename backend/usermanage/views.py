@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Users
+from rest_framework_simplejwt.tokens import RefreshToken
 import hashlib
 from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
+from django.contrib import auth
 from datetime import datetime
 
 
@@ -37,8 +38,8 @@ class CreateUser(APIView):
                     #     password.encode("UTF-8")).hexdigest()
 
                     users = User.objects.create_user(user_id=userid, first_name=request.data["firstname"],
-                                                 last_name=request.data["lastname"], email=request.data["email"],
-                                                 phone=phoneno, token=token, password=password)
+                                                     last_name=request.data["lastname"], email=request.data["email"],
+                                                     phone=phoneno, token=token, password=password)
 
                     users.save()
 
@@ -64,7 +65,7 @@ class CreateUser(APIView):
                     # send email, phone and password
                     try:
                         send_mail(subject="Registration Successful", message="Thanks for registering",
-                                  from_email="akeemtolani2@gmail.com", recipient_list=[request.data["email"]], html_message=html)
+                                  from_email="topit@admin.com", recipient_list=[request.data["email"]], html_message=html)
                     except Exception as err:
                         f = open("log.txt", "a")
                         f.write(
@@ -84,21 +85,24 @@ class CreateUser(APIView):
 class LoginUser(APIView):
     def post(self, request):
         if request.method == "POST":
-            username = request.data["username"]
+            username = request.data["phone"]
             password = request.data["password"]
-            if Users.objects.filter(mobilenumber=username).exists() or Users.objects.filter(email=username).exists():
-                password = hashlib.sha3_256(
-                    password.encode("UTF-8")).hexdigest()
-                if Users.objects.filter(password=password).exists():
-                    # user = Users.objects.filter(
-                    #     mobilenumber=username).first() or Users.objects.filter(email=username).first()
-                    # token, created = Token.objects.get_or_create(user=user.mobilenumber)
+            User = auth.authenticate(phone=username, password=password)
 
-                    # print("users", user.mobilenumber)
-                    # print("token", token)
-                    return Response({"message": "Login Successful",
-                                    #  "token": token
-                                     }, status=200)
+            print("user", User)
+
+            if User is not None:
+                user = get_user_model()
+                # user = user.pk
+                # print("users", user)
+                token = RefreshToken.for_user(user)
+                print("token", token)
+                # user = Users.objects.filter(
+                #     mobilenumber=username).first() or Users.objects.filter(email=username).first()
+                # token, created = Token.objects.get_or_create(user=user.mobilenumber)
+                return Response({"message": "Authentication Successful",
+                                #  "token": token
+                                 }, status=200)
             else:
-                return Response("Account Does Not Exist", status=401)
+                return Response("Authentication Failed", status=401)
         # return Response(status=200)
