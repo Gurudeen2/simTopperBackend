@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from django.contrib import auth
 from datetime import datetime
+import json
 
 
 def ORD(data):
@@ -96,8 +97,9 @@ class LoginUser(APIView):
                 user = user.objects.get(phone=username)
 
                 token = RefreshToken.for_user(user)
+
                 return Response({"message": "Authentication Successful",
-                                 "token": token
+                                 "token": str(token)
                                  }, status=200)
             else:
                 return Response("Authentication Failed", status=401)
