@@ -89,19 +89,15 @@ class LoginUser(APIView):
             password = request.data["password"]
             User = auth.authenticate(phone=username, password=password)
 
-            print("user", User)
+            # print("user", User)
 
             if User is not None:
                 user = get_user_model()
-                # user = user.pk
-                # print("users", user)
+                user = user.objects.get(phone=username)
+
                 token = RefreshToken.for_user(user)
-                print("token", token)
-                # user = Users.objects.filter(
-                #     mobilenumber=username).first() or Users.objects.filter(email=username).first()
-                # token, created = Token.objects.get_or_create(user=user.mobilenumber)
                 return Response({"message": "Authentication Successful",
-                                #  "token": token
+                                 "token": token
                                  }, status=200)
             else:
                 return Response("Authentication Failed", status=401)

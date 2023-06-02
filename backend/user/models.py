@@ -42,14 +42,14 @@ class User(AbstractUser):
     """User model."""
 
     username = None
-    user_id = models.CharField(_('User ID'), max_length=10, primary_key=True)
+    user_id = models.CharField(_('User ID'), max_length=10, unique=True)
     email = models.EmailField(blank=True, null=True)
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone = models.CharField(_('phone number'), validators=[
                              phone_regex], max_length=17, unique=True)  # validators should be a list
    
-    email = models.CharField(_('Email'), max_length=50, blank=True)
+    email = models.CharField(_('Email'), max_length=50, blank=True, unique=True)
     token = models.CharField(
         _('Token'), max_length=100, blank=False, null=False)
 
