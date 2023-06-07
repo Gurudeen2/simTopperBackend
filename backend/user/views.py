@@ -13,7 +13,6 @@ def ORD(data):
         charconv += ord(char)
     return charconv
 
-
 class CreateUser(APIView):
 
     def post(self, request):

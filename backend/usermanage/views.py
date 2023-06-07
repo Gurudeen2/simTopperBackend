@@ -89,9 +89,7 @@ class LoginUser(APIView):
             username = request.data["phone"]
             password = request.data["password"]
             User = auth.authenticate(phone=username, password=password)
-
-            # print("user", User)
-
+            prin("auth", request.user.is_authenticated)
             if User is not None:
                 user = get_user_model()
                 user = user.objects.get(phone=username)
@@ -103,4 +101,16 @@ class LoginUser(APIView):
                                  }, status=200)
             else:
                 return Response("Authentication Failed", status=401)
-        # return Response(status=200)
+
+
+class ChangePassword (APIView):
+    def put(self, request):
+        user = get_user_model()
+        username = request.data["username"]
+        password = request.data["password"]
+        user = user.objects.filter(phone=username).update(password=password)
+        return Response({"message":"Password Successfully Changed"},status=200)
+# class Logout(APIView):
+#     def post(self, request):
+#         if request.data
+#         return
