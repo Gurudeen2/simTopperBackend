@@ -89,11 +89,12 @@ class LoginUser(APIView):
             username = request.data["phone"]
             password = request.data["password"]
             User = auth.authenticate(phone=username, password=password)
-            prin("auth", request.user.is_authenticated)
+            print("User", User)
             if User is not None:
                 user = get_user_model()
-                user = user.objects.get(phone=username)
 
+                user = user.objects.get(phone=username)
+                userIt = auth.login(request, user)
                 token = RefreshToken.for_user(user)
 
                 return Response({"message": "Authentication Successful",
@@ -106,11 +107,19 @@ class LoginUser(APIView):
 class ChangePassword (APIView):
     def put(self, request):
         user = get_user_model()
-        username = request.data["username"]
+        user = user.objects.get(phone=request.data["phone"])
+        username = request.data["phone"]
         password = request.data["password"]
-        user = user.objects.filter(phone=username).update(password=password)
-        return Response({"message":"Password Successfully Changed"},status=200)
-# class Logout(APIView):
-#     def post(self, request):
-#         if request.data
-#         return
+        if user.is_authenticated:
+
+            user = user.objects.filter(
+                phone=username).update(password=password)
+            return Response({"message": "Password Successfully Changed"}, status=202)
+        else:
+            return Response({"message": "Account Doesn't Exist"}, status=404)
+
+
+class Logout(APIView):
+    def get(self, request):
+        auth.logout(request)
+        return Response(status=404)
