@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # "rest_framework.authtoken",
     "usermanage",
     "user",
+    "networkprovider",
     "rest_framework_simplejwt.token_blacklist",
 
 ]
