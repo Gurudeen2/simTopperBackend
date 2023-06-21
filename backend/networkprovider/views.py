@@ -23,15 +23,15 @@ class AddNetwork(APIView):
 
 class AllNetwork(APIView):
     def get(self, request):
-        for i in NetworkProvider.objects.all():
-            print("mode", i.providerID)
         network = serializers.serialize("json", NetworkProvider.objects.all())
-        net = json.loads(network)
-        print("net", net)
-        print("Dumps", json.dumps(net))
+        network = json.loads(network)
+
         return Response(network, status=200)
 
 
 class DeleteNetwork(APIView):
     def post(self, request):
+        providerID = request.data["providerID"]
+        deletenetwork = NetworkProvider.objects.get(providerID=providerID)
+        deletenetwork.delete()
         return Response({"message": "Successfully Deleted"}, status=200)
