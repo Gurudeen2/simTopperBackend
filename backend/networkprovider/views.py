@@ -30,8 +30,9 @@ class AllNetwork(APIView):
 
 
 class DeleteNetwork(APIView):
-    def post(self, request):
-        providerID = request.data["providerID"]
-        deletenetwork = NetworkProvider.objects.get(providerID=providerID)
-        deletenetwork.delete()
+    def delete(self, request):
+        print("provide", request.data)
+        # providerID = request.data["providerID"]
+        # NetworkProvider.objects.delete(providerID=providerID)
+
         return Response({"message": "Successfully Deleted"}, status=200)

@@ -112,9 +112,9 @@ class ChangePassword (APIView):
         password = request.data["password"]
         if user.is_authenticated:
 
-
-            user = User.objects.filter(
+            User.objects.filter(
                 phone=username).update(password=password)
+
             return Response({"message": "Password Successfully Changed"}, status=202)
         else:
             return Response({"message": "Account Doesn't Exist"}, status=404)
