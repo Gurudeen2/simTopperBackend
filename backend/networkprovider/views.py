@@ -23,12 +23,12 @@ class AddNetwork(APIView):
             return Response({"message": "Successfully Added"}, status=200)
 
 
-class AllNetwork(generics.ListCreateAPIView):
+class AllNetwork(generics.ListAPIView):
     # def get(self, request):
     queryset = NetworkProvider.objects.all()
     # network = serializers.serialize("json", NetworkProvider.objects.all())
     # network = json.loads(network)
-    
+
     serializer_class = NetworkProviderSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
