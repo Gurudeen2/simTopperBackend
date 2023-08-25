@@ -11,5 +11,5 @@ urlpatterns = [
     path("logout/", Logout.as_view()),
     path("addnetwork/", AddNetwork.as_view()),
     path("getnetwork/", AllNetwork.as_view()),
-    path("deletenetwork/", DeleteNetwork.as_view()),
+    path("deletenetwork/<int:id>", DeleteNetwork.as_view()),
 ]
