@@ -13,12 +13,18 @@ class GetDataPrice(generics.ListAPIView):
 
 
 class CreateDataPrice(generics.CreateAPIView):
+    # print
     serializer_class = DataPriceSerializer
     queryset = Dataprice.objects.all()
 
-class DeleteDataPrice(generics.DestroyAPIView):
+class DeleteDataPrice(APIView):
+    def delete(self, request, id):
+        return response.Response({"message":"Record Deleted"})
     # logic here
 
 
-class UpdateDataPrice(generics.UpdateAPIView):
+class UpdateDataPrice(APIView):
+    def put(self, request, id):
+        print("request", request.data)
+        return response.Response({"message":"Record updated Successfully"}, status=200)
     #logic here

@@ -12,4 +12,4 @@ class Dataprice(models.Model):
     price = models.CharField(max_length=10, blank=False, null=False)
 
     def __str__(self):
-        return self.network.providerID
+        return self.network.providerName
