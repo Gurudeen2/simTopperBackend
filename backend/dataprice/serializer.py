@@ -6,4 +6,4 @@ class DataPriceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dataprice
-        fields = ['network', 'amount', 'duration', 'price']
+        fields = '__all__'

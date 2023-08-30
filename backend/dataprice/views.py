@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from .models import Dataprice
 from .serializer import DataPriceSerializer
 
-# Create your views here.
 
 
 class GetDataPrice(generics.ListAPIView):
@@ -13,18 +12,17 @@ class GetDataPrice(generics.ListAPIView):
 
 
 class CreateDataPrice(generics.CreateAPIView):
-    # print
     serializer_class = DataPriceSerializer
     queryset = Dataprice.objects.all()
 
-class DeleteDataPrice(APIView):
-    def delete(self, request, id):
-        return response.Response({"message":"Record Deleted"})
-    # logic here
+
+class DeleteDataPrice(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = DataPriceSerializer
+    queryset = Dataprice.objects.all()
 
 
 class UpdateDataPrice(APIView):
     def put(self, request, id):
         print("request", request.data)
-        return response.Response({"message":"Record updated Successfully"}, status=200)
-    #logic here
+        return response.Response({"message": "Record updated Successfully"}, status=200)
+    # logic here

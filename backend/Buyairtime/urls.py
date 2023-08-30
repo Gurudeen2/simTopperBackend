@@ -2,7 +2,8 @@ from django.urls import path
 from .views import BuyAirtime
 from usermanage.views import CreateUser, LoginUser, ChangePassword, Logout
 from networkprovider.views import AddNetwork, AllNetwork, DeleteNetwork
-from dataprice.views import CreateDataPrice, GetDataPrice
+from dataprice.views import CreateDataPrice, GetDataPrice, DeleteDataPrice
+from datamount.views import CreateDataAmount
 
 urlpatterns = [
     path("airtime/", BuyAirtime.as_view()),
@@ -15,4 +16,6 @@ urlpatterns = [
     path("deletenetwork/<int:id>", DeleteNetwork.as_view()),
     path("getdataprice/", GetDataPrice.as_view()),
     path("adddataprice/", CreateDataPrice.as_view()),
+    path("dataprice/<int:pk>", DeleteDataPrice.as_view()),
+    path('dataamount', CreateDataAmount.as_view())
 ]

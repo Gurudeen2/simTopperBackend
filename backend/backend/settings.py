@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "user",
     "networkprovider",
     "dataprice",
+    'datamount',
     "rest_framework_simplejwt.token_blacklist",
 
 ]

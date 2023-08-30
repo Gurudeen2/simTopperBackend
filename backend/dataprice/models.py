@@ -5,6 +5,8 @@ from networkprovider.models import NetworkProvider
 
 
 class Dataprice(models.Model):
+    id = models.CharField(primary_key=True, max_length=20,
+                          blank=False, null=False)
     network = models.ForeignKey(
         NetworkProvider, on_delete=models.CASCADE, null=False, blank=False)
     amount = models.CharField(max_length=10, blank=False, null=False)
@@ -12,4 +14,4 @@ class Dataprice(models.Model):
     price = models.CharField(max_length=10, blank=False, null=False)
 
     def __str__(self):
-        return self.network.providerName
+        return self.id
