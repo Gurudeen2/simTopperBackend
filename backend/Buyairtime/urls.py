@@ -16,7 +16,7 @@ urlpatterns = [
     path("deletenetwork/<int:id>", DeleteNetwork.as_view()),
     path("getdataprice/", GetDataPrice.as_view()),
     path("adddataprice/", CreateDataPrice.as_view()),
-    path("dataprice/<int:pk>", DeleteDataPrice.as_view()),
+    path("dataprice/<str:pk>", DeleteDataPrice.as_view()),
     path('dataamount/', CreateDataAmount.as_view()),
     path('dataamountchange/<int:pk>', DeleteDataAmount.as_view())
 ]

@@ -36,7 +36,7 @@ class AllNetwork(generics.ListAPIView):
 
 
 class DeleteNetwork(APIView):
-    def delete(self, request, id):
+    def delete(self, id):
 
         # providerID = request.data["providerID"]
         delete_network = NetworkProvider.objects.filter(providerID=id)
