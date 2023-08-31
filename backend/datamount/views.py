@@ -11,6 +11,11 @@ class DataAmountSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CreateDataAmount(generics.CreateAPIView):
+class CreateDataAmount(generics.ListCreateAPIView):
+    serializer_class = DataAmountSerializer
+    queryset = DataAmount.objects.all()
+
+
+class DeleteDataAmount(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DataAmountSerializer
     queryset = DataAmount.objects.all()
