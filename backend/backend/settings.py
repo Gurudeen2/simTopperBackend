@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "networkprovider",
     "dataprice",
     'datamount',
+    'wallet',
     "rest_framework_simplejwt.token_blacklist",
 
 ]
