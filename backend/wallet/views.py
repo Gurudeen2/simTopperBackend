@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics, serializers
+from rest_framework import generics, serializers, status
 from .models import Wallet
 import json
 
@@ -27,24 +27,22 @@ class createWallet(generics.ListCreateAPIView):
 
 class updateWallet(APIView):
     def get(self, request, userId):
-        wallet = Wallet.objects.get(userId=userId)
+        try:
+            wallet = Wallet.objects.get(userId=userId)
+        except Wallet.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(WalletSerializer(wallet).data)
 
     def put(self, request, userId):
 
-        # {'walletId': '4', 'userId': '1', 'amount': '10000.00',
-        #     'date_fund': '2023-09-23T16:26:00Z'}
-        wallet = Wallet.objects.filter(userId=userId)
+        wallet = Wallet.objects.get(userId=userId)
+        serializer = WalletSerializer(wallet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
 
-        wallet.update(amount=request.data["amount"],
-                      date_fund=request.data["date_fund"])
-        serializer = UpdateWalletSerializer(wallet)
-        return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class ListWallet(generics.ListCreateAPIView):
-    queryset = Wallet.objects.all()
-    serializer_class = WalletSerializer
 
 
 class GetWallet(APIView):
