@@ -4,7 +4,7 @@ from usermanage.views import CreateUser, LoginUser, ChangePassword, Logout
 from networkprovider.views import AddNetwork, AllNetwork, DeleteNetwork
 from dataprice.views import CreateDataPrice, GetDataPrice, DeleteDataPrice
 from datamount.views import CreateDataAmount, DeleteDataAmount
-from wallet.views import createWallet, GetWallet
+from wallet.views import createWallet, GetWallet, updateWallet
 
 urlpatterns = [
     path("airtime/", BuyAirtime.as_view()),
@@ -21,5 +21,6 @@ urlpatterns = [
     path('dataamount/', CreateDataAmount.as_view()),
     path('dataamountchange/<int:pk>', DeleteDataAmount.as_view()),
     path('createwallet/', createWallet.as_view()),
-    path('getwallet/<walletId>', GetWallet.as_view())
+    path('getwallet/<userId>', GetWallet.as_view()),
+    path('updatewallet/<userId>', updateWallet.as_view())
 ]
